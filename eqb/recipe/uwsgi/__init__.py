@@ -147,7 +147,7 @@ class UWSGI:
 
 
         requirements, ws = self.egg.working_set()
-        paths = zc.buildout.easy_install._get_path(ws, self.get_extra_paths())
+        paths = ws.entries
         for path in paths:
             conf += "<pythonpath>%s</pythonpath>\n" % path
 
