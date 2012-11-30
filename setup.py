@@ -30,6 +30,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'zc.buildout',
+        'zc.recipe.egg',
+        'PasteDeploy',
     ],
     entry_points = {
         'zc.buildout': ['default = unweb.recipe.uwsgi:UWSGI']

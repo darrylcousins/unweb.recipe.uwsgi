@@ -39,7 +39,8 @@ class UWSGI:
         """
         cache = self.buildout['buildout']['download-cache']
         download = Download(cache=cache)
-        download_path, is_temp = download('http://projects.unbit.it/downloads/uwsgi-latest.tar.gz')
+        download_url = self.options.get('url', 'http://projects.unbit.it/downloads/uwsgi-latest.tar.gz')
+        download_path, is_temp = download(download_url)
         return download_path
 
     def extract_release(self, download_path):
