@@ -37,7 +37,7 @@ class UWSGI:
         """
         Download uWSGI release based on 'version' option and return path to downloaded file.
         """
-        cache = self.buildout['buildout']['download-cache']
+        cache = self.buildout['buildout'].get('download-cache', None)
         download = Download(cache=cache)
         download_url = self.options.get('url', 'http://projects.unbit.it/downloads/uwsgi-latest.tar.gz')
         download_path, is_temp = download(download_url)

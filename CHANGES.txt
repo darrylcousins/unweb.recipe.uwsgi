@@ -1,3 +1,7 @@
+0.4
+---
+- Get download cache defensively
+
 0.3
 ---
 - Fix uwsgi-start script
