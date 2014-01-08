@@ -96,8 +96,8 @@ class UWSGI:
     def create_uwsgi_start_script(self, xml_path):
         bin_path = os.path.join(self.buildout['buildout']['bin-directory'])
         script_name = "%s/%s" % (bin_path, self.options.get('script', 'uwsgi-start'))
-        body = """!/bin/sh
-%s/%s -x %s --paste-logger $@                 
+        body = """#!/bin/sh
+%s/%s -x %s --paste-logger --ini-paste $@                 
                """ % (bin_path, self.name, xml_path)
         f = open(script_name, 'w')
         f.write(body)
