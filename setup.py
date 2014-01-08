@@ -1,6 +1,10 @@
 from setuptools import setup, find_packages
 
-version = '0.1'
+here = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(here, 'README.txt')).read()
+CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+
+version = '0.2'
 
 setup(
     name = "unweb.recipe.uwsgi",
@@ -11,6 +15,7 @@ setup(
             which is in turn a modified version of 
             https://github.com/shaunsephton/shaunsephton.recipe.uwsgi
     """,
+    long_description=README + '\n\n' +  CHANGES,    
     classifiers=[
     'Framework :: Buildout',
     'Topic :: Software Development :: Build Tools',

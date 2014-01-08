@@ -69,6 +69,8 @@ class UWSGI:
             sys_path_changed = True
 
         # Build uWSGI.
+        if not os.environ.get('CC'):
+            os.environ['CC'] = 'gcc'
         uwsgiconfig = __import__('uwsgiconfig')
         bconf = '%s/buildconf/default.ini' % uwsgi_path
         uconf = uwsgiconfig.uConf(bconf)
@@ -90,6 +92,18 @@ class UWSGI:
         shutil.copy(uwsgi_executable_path, bin_path)
         uwsgi_path = os.path.join(self.buildout['buildout']['bin-directory'])
         return os.path.join(bin_path, os.path.split(uwsgi_executable_path)[-1])
+    
+    def create_uwsgi_start_script(self, xml_path):
+        bin_path = os.path.join(self.buildout['buildout']['bin-directory'])
+        script_name = "%s/%s" % (bin_path, self.options.get('script', 'uwsgi-start'))
+        body = """!/bin/sh
+%s/%s -x %s --paste-logger --honour-stdin $@                 
+               """ % (bin_path, self.name, xml_path)
+        f = open(script_name, 'w')
+        os.fchmod(f, 755)
+        f.write(body)
+        f.close()
+        return script_name
 
     def get_extra_paths(self):
         """
@@ -176,7 +190,9 @@ class UWSGI:
             shutil.rmtree(extract_path)
 
         # Create uWSGI conf xml.
-        paths.append(self.create_conf_xml())
+        xml_path = self.create_conf_xml()
+        paths.append(xml_path)
+        self.create_uwsgi_start_script(xml_path)
         
         return paths
     
