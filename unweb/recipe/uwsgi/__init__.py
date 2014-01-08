@@ -97,12 +97,12 @@ class UWSGI:
         bin_path = os.path.join(self.buildout['buildout']['bin-directory'])
         script_name = "%s/%s" % (bin_path, self.options.get('script', 'uwsgi-start'))
         body = """!/bin/sh
-%s/%s -x %s --paste-logger --honour-stdin $@                 
+%s/%s -x %s --paste-logger $@                 
                """ % (bin_path, self.name, xml_path)
         f = open(script_name, 'w')
-        os.fchmod(f, 755)
         f.write(body)
         f.close()
+        os.chmod(script_name, 0755)
         return script_name
 
     def get_extra_paths(self):
