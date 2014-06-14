@@ -3,9 +3,12 @@ import setuptools
 import shutil
 import sys
 import tempfile
+import stat
 from zc.buildout.download import Download
 import zc
 import zc.recipe.egg
+
+PERM = (stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
 
 class UWSGI:
     """
@@ -102,7 +105,7 @@ class UWSGI:
         f = open(script_name, 'w')
         f.write(body)
         f.close()
-        os.chmod(script_name, 0755)
+        os.chmod(script_name, PERM)
         return script_name
 
     def get_extra_paths(self):
