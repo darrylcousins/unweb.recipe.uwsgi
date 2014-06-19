@@ -148,7 +148,9 @@ class UWSGI:
         """
         Create xml file file with which to run uwsgi.
         """
-        path = os.path.join(self.buildout['buildout']['parts-directory'], self.name)
+        path = self.buildout['buildout'].get('etc-directory', None)
+        if not path:
+            path = os.path.join(self.buildout['buildout']['parts-directory'], self.name)
         try:
             os.mkdir(path)
         except OSError:
